@@ -24,8 +24,8 @@ public class Application {
 
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.setConnectTimeout(Duration.ofSeconds(connectionTimeout))
-				.setReadTimeout(Duration.ofSeconds(readTimeout))
+		return builder.setConnectTimeout(Duration.ofMillis(connectionTimeout))
+				.setReadTimeout(Duration.ofMillis(readTimeout))
 				.build();
 	}
 

@@ -2,7 +2,10 @@
 
 ## Dependencies
 
+- Spring Boot 3.0.4
 - Lombok
-- Spring Web
 - H2 Database
+- Spring Web
 - Spring Data JPA
+- Spring WebFlux
+- Spring Validation

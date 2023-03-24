@@ -20,7 +20,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
+    public ResponseEntity<ApiError> handleConstraintViolation(ConstraintViolationException ex) {
         List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             errors.add(violation.getPropertyPath() + ": " + violation.getMessage());
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+    public ResponseEntity<ApiError> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
         String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiError> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         List<String> errors = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.add(error.getField() + ": " + error.getDefaultMessage());
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException(Exception ex) {
+    public ResponseEntity<ApiError> handleException(Exception ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
 
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleException(RuntimeException ex) {
+    public ResponseEntity<ApiError> handleException(RuntimeException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
 
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
+    public ResponseEntity<ApiError> handleResourceNotFoundException(ResourceNotFoundException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
 
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND,
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
-    public ResponseEntity<Object> handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
+    public ResponseEntity<ApiError> handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,

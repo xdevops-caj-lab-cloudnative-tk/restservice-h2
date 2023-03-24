@@ -39,4 +39,10 @@ public class FetchQuoteController {
         Quote[] quotes = restTemplate.getForEntity(uri, Quote[].class).getBody();
         return Arrays.asList(quotes);
     }
+
+    @GetMapping("/quotes/random/slow")
+    public Quote fetchRandomQuoteSlow() {
+        String uri = host + "/api/random/slow";
+        return restTemplate.getForObject(uri, Quote.class);
+    }
 }
